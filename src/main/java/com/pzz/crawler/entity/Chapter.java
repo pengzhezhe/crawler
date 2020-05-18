@@ -4,15 +4,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Chapter implements Comparable<Chapter> {
+    String URL;
     String title;
     String content;
 
     public Chapter() {
     }
 
-    public Chapter(String title, String content) {
+    public Chapter(String URL, String title, String content) {
+        this.URL = URL;
         this.title = title;
         this.content = content;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
     public String getTitle() {
@@ -50,7 +60,8 @@ public class Chapter implements Comparable<Chapter> {
     @Override
     public String toString() {
         return "Chapter{" +
-                "title='" + title + '\'' +
+                "URL='" + URL + '\'' +
+                ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
