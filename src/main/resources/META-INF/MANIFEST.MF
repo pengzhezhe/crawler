@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: jsoup-1.11.3.jar
-com.pzz.crawler.lz.Main-Class: com.pzz.crawler.lz.Main
-
