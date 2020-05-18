@@ -1,4 +1,4 @@
-package com.pzz.crawler.entity;
+package com.pzz.crawler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package com.pzz.crawler.dl;
+package com.pzz.crawler;
 
 public class Constant {
     public static final String baseURL = "http://www.jueshitangmen.info";
