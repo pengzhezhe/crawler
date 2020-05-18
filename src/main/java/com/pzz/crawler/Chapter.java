@@ -1,11 +1,19 @@
 package com.pzz.crawler;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class Chapter implements Comparable<Chapter> {
+public class Chapter {
+    /**
+     * 章节页面URL
+     */
     String URL;
+
+    /**
+     * 章节标题
+     */
     String title;
+
+    /**
+     * 章节内容
+     */
     String content;
 
     public Chapter() {
@@ -39,22 +47,6 @@ public class Chapter implements Comparable<Chapter> {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Override
-    public int compareTo(Chapter chapter) {
-        Pattern pattern1 = Pattern.compile("第\\d+章");
-        Matcher matcher1 = pattern1.matcher(title);
-        Pattern pattern2 = Pattern.compile("第\\d+章");
-        Matcher matcher2 = pattern2.matcher(chapter.title);
-        int a = 0, b = 0;
-        while (matcher1.find()) {
-            a = Integer.parseInt(matcher1.group().replace("第", "").replace("章", ""));
-        }
-        while (matcher2.find()) {
-            b = Integer.parseInt(matcher2.group().replace("第", "").replace("章", ""));
-        }
-        return a > b ? 1 : -1;
     }
 
     @Override

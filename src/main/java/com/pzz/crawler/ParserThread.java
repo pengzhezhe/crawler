@@ -9,8 +9,14 @@ import java.io.IOException;
 import java.util.List;
 
 public class ParserThread implements Runnable {
+    /**
+     * 章节列表
+     */
     private final List<Chapter> chapters;
 
+    /**
+     * 待解析章节索引
+     */
     private int index;
 
     public ParserThread(List<Chapter> chapters, int index) {
@@ -18,6 +24,13 @@ public class ParserThread implements Runnable {
         this.index = index;
     }
 
+    /**
+     * 解析章节
+     *
+     * @param url 章节页面URL
+     * @return
+     * @throws IOException
+     */
     private Chapter chapterParser(String url) throws IOException {
         Document document = Jsoup.connect(url).get();
         Chapter chapter = new Chapter();
@@ -27,7 +40,7 @@ public class ParserThread implements Runnable {
         for (Element e : elements) {
             content.append("\t").append(e.text()).append("\n");
         }
-        System.out.println("Parser:"+title);
+        System.out.println("Parser:" + title);
         chapter.setURL(url);
         chapter.setTitle(title);
         chapter.setContent(content.toString());
@@ -39,18 +52,21 @@ public class ParserThread implements Runnable {
         String currentURL;
         Chapter chapter;
         while (true) {
+            //获取当前待解析的章节
             synchronized (this) {
                 if (index == chapters.size())
                     return;
                 currentIndex = index++;
                 currentURL = chapters.get(currentIndex).getURL();
             }
+            //解析章节页面数据
             try {
                 chapter = chapterParser(currentURL);
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
             }
+            //将解析数据写入章节列表中
             synchronized (chapters) {
                 Chapter realChapter = chapters.get(currentIndex);
                 realChapter.setTitle(chapter.getTitle());

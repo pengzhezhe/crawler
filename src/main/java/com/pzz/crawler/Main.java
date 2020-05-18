@@ -14,7 +14,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        List<Chapter> chapters = getCategory();
+        List<Chapter> chapters = parserCategory();
         ParserThread t = new ParserThread(chapters, 0);
         Thread t1 = new Thread(t);
         Thread t2 = new Thread(t);
@@ -31,6 +31,7 @@ public class Main {
         t3.join();
         t4.join();
 
+        //创建文件
         String userHome = System.getProperty("user.home");
         File file = new File(userHome + "/Desktop/lz5.txt");
         if (!file.exists())
@@ -38,21 +39,29 @@ public class Main {
         FileOutputStream out = new FileOutputStream(file);
         PrintStream pout = new PrintStream(out);
 
+        //把章节列表中的数据写入文件
         for (Chapter chapter : chapters) {
-            System.out.println("Write:"+chapter.getTitle());
+            System.out.println("Write:" + chapter.getTitle());
             pout.println(chapter.getTitle());
             pout.println(chapter.getContent());
         }
     }
 
-    private static List<Chapter> getCategory() throws IOException {
+    /**
+     * 解析目录
+     *
+     * @return 章节列表
+     * @throws IOException
+     */
+    private static List<Chapter> parserCategory() throws IOException {
         List<Chapter> category = new ArrayList<>();
-        Document document = Jsoup.connect(Constant.categoryURL).get();
+        Document document = Jsoup.connect(Constant.DL_CATEGORY_URL).get();
         Elements dd = document.getElementsByTag("dd");
+        //去掉最新章节，从第一章开始
         dd.subList(0, 12).clear();
         Elements hrefs = dd.select("a[href]");
         for (int i = 0; i < hrefs.size(); i++) {
-            String href = Constant.baseURL + hrefs.get(i).attr("href");
+            String href = Constant.DL_BASE_URL + hrefs.get(i).attr("href");
             Chapter chapter = new Chapter(href, null, null);
             category.add(i, chapter);
         }

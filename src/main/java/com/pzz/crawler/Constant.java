@@ -1,8 +1,8 @@
 package com.pzz.crawler;
 
 public class Constant {
-    public static final String baseURL = "http://www.jueshitangmen.info";
+    public static final String DL_BASE_URL = "http://www.jueshitangmen.info";
 
-    public static final String categoryURL = baseURL + "/3048";
+    public static final String DL_CATEGORY_URL = DL_BASE_URL + "/3048";
 
 }
