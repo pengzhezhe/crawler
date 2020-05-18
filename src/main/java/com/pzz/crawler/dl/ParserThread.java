@@ -12,8 +12,11 @@ import java.util.List;
 public class ParserThread implements Runnable {
     private List<Chapter> chapters;
 
-    public ParserThread(List<Chapter> chapters) {
+    private int index;
+
+    public ParserThread(List<Chapter> chapters, int index) {
         this.chapters = chapters;
+        this.index = index;
     }
 
     public static void chapterParser(Chapter chapter) throws IOException {
@@ -33,18 +36,14 @@ public class ParserThread implements Runnable {
         int i = 0;
         while (true) {
             synchronized (this) {
-                for (; i < chapters.size(); i++) {
-                    if (chapters.get(i).getTitle() == null)
-                        break;
-                }
+                if (index == chapters.size())
+                    return;
                 try {
-                    chapterParser(chapters.get(i));
+                    chapterParser(chapters.get(index++));
                 } catch (IOException e) {
                     e.printStackTrace();
                     return;
                 }
-                if (i == chapters.size() - 1)
-                    return;
             }
         }
     }

@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         List<Chapter> chapters = getCategory();
-        ParserThread t = new ParserThread(chapters);
+        ParserThread t = new ParserThread(chapters, 0);
         Thread t1 = new Thread(t);
         Thread t2 = new Thread(t);
         Thread t3 = new Thread(t);
