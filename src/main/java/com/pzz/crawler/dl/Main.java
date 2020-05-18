@@ -40,7 +40,7 @@ public class Main {
         PrintStream pout = new PrintStream(out);
 
         for (Chapter chapter : chapters) {
-            System.out.println(chapter.getTitle());
+            System.out.println("Write:"+chapter.getTitle());
             pout.println(chapter.getTitle());
             pout.println(chapter.getContent());
         }
