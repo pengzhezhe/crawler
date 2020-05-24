@@ -33,7 +33,7 @@ public class Main {
 
         //创建文件
         String userHome = System.getProperty("user.home");
-        File file = new File(userHome + "/Desktop/lz5.txt");
+        File file = new File(userHome + "/Desktop/123.yml");
         if (!file.exists())
             file.createNewFile();
         FileOutputStream out = new FileOutputStream(file);
