@@ -1,5 +1,7 @@
-package com.pzz.crawler;
+package com.pzz.crawler.dl;
 
+import com.pzz.crawler.Chapter;
+import com.pzz.crawler.Constant;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -15,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         List<Chapter> chapters = parserCategory();
-        ParserThread t = new ParserThread(chapters, 0);
+        DlparserThread t = new DlparserThread(chapters, 0);
         Thread t1 = new Thread(t);
         Thread t2 = new Thread(t);
         Thread t3 = new Thread(t);
@@ -33,7 +35,7 @@ public class Main {
 
         //创建文件
         String userHome = System.getProperty("user.home");
-        File file = new File(userHome + "/Desktop/123.yml");
+        File file = new File(userHome + "/Desktop/dl.txt");
         if (!file.exists())
             file.createNewFile();
         FileOutputStream out = new FileOutputStream(file);
@@ -54,7 +56,7 @@ public class Main {
      * @throws IOException
      */
     private static List<Chapter> parserCategory() throws IOException {
-        List<Chapter> category = new ArrayList<>();
+        List<Chapter> category = new ArrayList<Chapter>();
         Document document = Jsoup.connect(Constant.DL_CATEGORY_URL).get();
         Elements dd = document.getElementsByTag("dd");
         //去掉最新章节，从第一章开始
