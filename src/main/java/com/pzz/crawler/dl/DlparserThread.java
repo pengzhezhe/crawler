@@ -23,7 +23,8 @@ public class DlparserThread extends ParserThread {
         Elements elements = document.getElementById("content").getElementsByTag("p");
         StringBuilder content = new StringBuilder();
         for (Element e : elements) {
-            content.append("\t").append(e.text()).append("\n");
+            if (!e.text().equals("喜欢斗罗大陆4终极斗罗请大家收藏：(www.jueshitangmen.info)斗罗大陆4终极斗罗绝世唐门更新速度最快。"))
+                content.append("\t").append(e.text()).append("\n");
         }
         System.out.println("Parser:" + title);
         chapter.setURL(url);

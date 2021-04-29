@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    private static final String DL_BASE_URL = "http://www.jueshitangmen.info";
-    private static final String DL_CATEGORY_URL = DL_BASE_URL+"/27";
+
+    private static final String BASE_URL = "http://www.jueshitangmen.info";
+
+    private static final String CATEGORY_URL = BASE_URL + "/27";
 
     public static void main(String[] args) throws IOException, InterruptedException {
         List<Chapter> chapters = parserCategory();
@@ -36,7 +38,7 @@ public class Main {
 
         //创建文件
         String userHome = System.getProperty("user.home");
-        File file = new File(userHome + "/Desktop/dl.txt");
+        File file = new File(userHome + "/Desktop/斗罗大陆4终极斗罗.txt");
         if (!file.exists())
             file.createNewFile();
         FileOutputStream out = new FileOutputStream(file);
@@ -58,14 +60,14 @@ public class Main {
      */
     private static List<Chapter> parserCategory() throws IOException {
         List<Chapter> category = new ArrayList<Chapter>();
-        Document document = Jsoup.connect(DL_CATEGORY_URL).get();
+        Document document = Jsoup.connect(CATEGORY_URL).get();
         Elements dd = document.getElementsByTag("dd");
         //去掉最新章节，从第一章开始
         dd.subList(0, 12).clear();
         Elements hrefs = dd.select("a[href]");
         for (int i = 0; i < hrefs.size(); i++) {
-            String href = DL_BASE_URL + hrefs.get(i).attr("href");
-            Chapter chapter = new Chapter(href, null, null);
+            String chapterURL = BASE_URL + hrefs.get(i).attr("href");
+            Chapter chapter = new Chapter(chapterURL, null, null);
             category.add(i, chapter);
         }
         return category;
