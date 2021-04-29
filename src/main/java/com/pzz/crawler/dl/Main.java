@@ -1,7 +1,6 @@
 package com.pzz.crawler.dl;
 
 import com.pzz.crawler.Chapter;
-import com.pzz.crawler.Constant;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -14,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    private static final String DL_BASE_URL = "http://www.jueshitangmen.info";
+    private static final String DL_CATEGORY_URL = DL_BASE_URL+"/27";
 
     public static void main(String[] args) throws IOException, InterruptedException {
         List<Chapter> chapters = parserCategory();
@@ -57,13 +58,13 @@ public class Main {
      */
     private static List<Chapter> parserCategory() throws IOException {
         List<Chapter> category = new ArrayList<Chapter>();
-        Document document = Jsoup.connect(Constant.DL_CATEGORY_URL).get();
+        Document document = Jsoup.connect(DL_CATEGORY_URL).get();
         Elements dd = document.getElementsByTag("dd");
         //去掉最新章节，从第一章开始
         dd.subList(0, 12).clear();
         Elements hrefs = dd.select("a[href]");
         for (int i = 0; i < hrefs.size(); i++) {
-            String href = Constant.DL_BASE_URL + hrefs.get(i).attr("href");
+            String href = DL_BASE_URL + hrefs.get(i).attr("href");
             Chapter chapter = new Chapter(href, null, null);
             category.add(i, chapter);
         }
